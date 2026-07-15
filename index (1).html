@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ryan Baik — Research &amp; Systems</title>
+<meta name="description" content="Ryan Baik — student researcher at Rutgers WINLAB working across systems, statistics, and independent research.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #F7F6F2;
+    --surface: #EFEDE6;
+    --card: #FBFAF7;
+    --ink: #1B1D19;
+    --ink-dim: #6B6E66;
+    --accent: #A6402F;
+    --accent-2: #2F4A56;
+    --line: rgba(27,29,25,0.10);
+    --line-strong: rgba(27,29,25,0.18);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter', system-ui, sans-serif;
+    line-height:1.7;
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--accent);color:#F6F7F2;}
+  a{color:inherit;text-decoration:none;}
+  .mono{font-family:'IBM Plex Mono', monospace;}
+  .serif{font-family:'Lora', serif;}
+
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:24px clamp(20px,6vw,80px);
+    background:linear-gradient(to bottom, rgba(247,246,242,0.95), rgba(247,246,242,0));
+    backdrop-filter:blur(6px);
+  }
+  nav .name{font-family:'Lora',serif;font-weight:600;font-size:16px;letter-spacing:0.01em;}
+  nav .name .dot{color:var(--accent);}
+  nav ul{display:flex;gap:clamp(18px,3vw,40px);list-style:none;}
+  nav ul li a{
+    font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;
+    text-transform:uppercase;color:var(--ink-dim);
+    position:relative;padding-bottom:4px;transition:color .25s ease;
+  }
+  nav ul li a::after{
+    content:'';position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--accent);
+    transition:width .3s ease;
+  }
+  nav ul li a:hover{color:var(--ink);}
+  nav ul li a:hover::after{width:100%;}
+
+  section{padding:132px clamp(20px,8vw,100px);}
+  .section-inner{max-width:920px;margin:0 auto;}
+
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.14em;
+    text-transform:uppercase;color:var(--accent);margin-bottom:16px;
+  }
+
+  /* HERO */
+  #hero{
+    min-height:92vh;display:flex;flex-direction:column;justify-content:center;
+    padding-top:140px;max-width:760px;
+  }
+  #hero .kicker{
+    font-family:'IBM Plex Mono',monospace;color:var(--ink-dim);font-size:12px;
+    letter-spacing:0.1em;text-transform:uppercase;margin-bottom:26px;
+  }
+  #hero h1{
+    font-family:'Lora',serif;font-size:clamp(2.8rem,6.4vw,4.8rem);font-weight:600;
+    letter-spacing:-0.01em;line-height:1.08;
+  }
+  #hero .tagline{
+    margin-top:28px;max-width:52ch;color:var(--ink-dim);font-size:clamp(1.02rem,1.4vw,1.18rem);
+  }
+  #hero .hero-meta{
+    margin-top:48px;display:flex;flex-wrap:wrap;gap:36px;
+  }
+  #hero .hero-meta div{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink-dim);}
+  #hero .hero-meta strong{display:block;color:var(--ink);font-size:14px;margin-bottom:5px;font-weight:500;font-family:'Inter',sans-serif;}
+
+  .scroll-cue{
+    margin-top:64px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink-dim);
+    display:inline-flex;align-items:center;gap:8px;letter-spacing:0.08em;text-transform:uppercase;
+    width:fit-content;
+  }
+  .scroll-cue svg{width:12px;height:12px;}
+
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease, transform .6s ease;}
+  .reveal.visible{opacity:1;transform:translateY(0);}
+
+  h2.section-title{
+    font-family:'Lora',serif;font-size:clamp(1.8rem,3.4vw,2.5rem);font-weight:600;letter-spacing:-0.005em;margin-bottom:14px;
+  }
+  .section-sub{color:var(--ink-dim);max-width:56ch;margin-bottom:56px;font-size:0.98rem;}
+
+  /* FEATURED — RUTGERS WINLAB */
+  .featured-panel{
+    background:var(--surface);border-radius:6px;padding:clamp(32px,4vw,56px);
+  }
+  .featured-head{
+    display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:10px;
+    margin-bottom:36px;padding-bottom:28px;border-bottom:1px solid var(--line-strong);
+  }
+  .featured-head h3{font-family:'Lora',serif;font-size:1.5rem;font-weight:600;}
+  .featured-head span{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink-dim);text-transform:uppercase;letter-spacing:0.06em;}
+
+  .wl-role{padding:28px 0;}
+  .wl-role + .wl-role{border-top:1px solid var(--line);}
+  .wl-role:first-of-type{padding-top:0;}
+  .wl-role .row{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:8px;}
+  .wl-role .role{font-family:'Lora',serif;font-size:1.18rem;font-weight:600;}
+  .wl-role .date{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink-dim);white-space:nowrap;}
+  .wl-role .sub{color:var(--accent);font-size:0.9rem;font-weight:500;margin-bottom:14px;}
+  .wl-role ul{list-style:none;display:flex;flex-direction:column;gap:9px;}
+  .wl-role ul li{position:relative;padding-left:16px;color:var(--ink-dim);font-size:0.96rem;}
+  .wl-role ul li::before{content:'';position:absolute;left:0;top:0.65em;width:5px;height:5px;border-radius:50%;background:var(--accent-2);}
+
+  /* OTHER EXPERIENCE — simple list */
+  .simple-list{display:flex;flex-direction:column;}
+  .simple-entry{padding:28px 0;border-top:1px solid var(--line);}
+  .simple-entry:first-child{border-top:none;padding-top:0;}
+  .simple-entry .row{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:6px;}
+  .simple-entry .role{font-family:'Lora',serif;font-size:1.1rem;font-weight:600;}
+  .simple-entry .date{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink-dim);white-space:nowrap;}
+  .simple-entry .org{color:var(--accent);font-size:0.9rem;font-weight:500;margin-bottom:12px;}
+  .simple-entry ul{list-style:none;display:flex;flex-direction:column;gap:8px;}
+  .simple-entry ul li{position:relative;padding-left:16px;color:var(--ink-dim);font-size:0.95rem;}
+  .simple-entry ul li::before{content:'';position:absolute;left:0;top:0.65em;width:5px;height:5px;border-radius:50%;background:var(--accent-2);}
+
+  /* RESEARCH CARDS */
+  .research-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+  @media (max-width:820px){.research-grid{grid-template-columns:1fr;}}
+  .research-card{
+    border-radius:6px;padding:clamp(26px,3vw,36px);background:var(--card);
+    box-shadow:0 1px 0 var(--line-strong);
+    display:flex;flex-direction:column;gap:16px;
+  }
+  .research-card .rtag{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--accent-2);letter-spacing:0.1em;text-transform:uppercase;}
+  .research-card h3{font-family:'Lora',serif;font-size:1.28rem;font-weight:600;}
+  .research-card p{color:var(--ink-dim);font-size:0.95rem;}
+  .research-stats{display:flex;flex-wrap:wrap;gap:24px;padding-top:16px;border-top:1px solid var(--line);}
+  .research-stats div strong{display:block;font-family:'IBM Plex Mono',monospace;color:var(--accent);font-size:1.1rem;}
+  .research-stats div span{font-size:10.5px;color:var(--ink-dim);font-family:'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:0.05em;}
+  .status-chip{
+    align-self:flex-start;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.06em;
+    text-transform:uppercase;padding:5px 11px;border:1px solid var(--line-strong);border-radius:20px;color:var(--ink-dim);
+  }
+  .status-chip.active{color:var(--accent);border-color:var(--accent);}
+
+  /* EDUCATION */
+  .edu-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:64px;}
+  @media (max-width:820px){.edu-grid{grid-template-columns:1fr;gap:40px;}}
+  .edu-block .school{font-family:'Lora',serif;font-size:1.3rem;font-weight:600;}
+  .edu-block .school-sub{color:var(--ink-dim);font-size:0.9rem;margin-top:6px;font-family:'IBM Plex Mono',monospace;}
+  .col-label{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--accent-2);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:18px;}
+  .prog-list{list-style:none;display:flex;flex-direction:column;gap:16px;}
+  .prog-list li{display:flex;justify-content:space-between;gap:16px;font-size:0.92rem;border-bottom:1px solid var(--line);padding-bottom:14px;}
+  .prog-list li .p-name{color:var(--ink);}
+  .prog-list li .p-org{color:var(--ink-dim);font-size:0.82rem;display:block;margin-top:3px;}
+  .prog-list li .p-status{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--accent-2);text-transform:uppercase;white-space:nowrap;letter-spacing:0.05em;}
+
+  /* SKILLS */
+  .skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:40px;}
+  .skill-col .skill-label{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--accent-2);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:16px;}
+  .skill-col ul{list-style:none;display:flex;flex-direction:column;gap:9px;}
+  .skill-col li{font-size:0.95rem;color:var(--ink-dim);}
+  .skill-col li b{color:var(--ink);font-weight:500;}
+
+  /* CONTACT */
+  #contact{padding-bottom:96px;}
+  .contact-wrap{display:flex;flex-direction:column;gap:36px;}
+  .contact-wrap h2{font-family:'Lora',serif;font-size:clamp(2rem,4.6vw,3rem);font-weight:600;max-width:18ch;letter-spacing:-0.005em;}
+  .contact-links{display:flex;flex-wrap:wrap;gap:16px;}
+  .clink{
+    font-family:'IBM Plex Mono',monospace;font-size:12.5px;
+    padding:15px 24px;border-radius:4px;display:flex;align-items:center;gap:10px;
+    transition:background .25s ease;background:var(--card);box-shadow:0 1px 0 var(--line-strong);
+  }
+  .clink:hover{background:var(--surface);}
+  .clink .arrow{color:var(--accent);}
+  footer{
+    padding:32px clamp(20px,8vw,100px);border-top:1px solid var(--line);
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;
+    font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink-dim);
+  }
+
+  @media (max-width:640px){
+    section{padding:96px 20px;}
+    .wl-role .row, .simple-entry .row{flex-direction:column;align-items:flex-start;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .reveal{transition:none;opacity:1;transform:none;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#hero" class="name">RYAN BAIK<span class="dot">.</span></a>
+  <ul>
+    <li><a href="#winlab">WINLAB</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#research">Research</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<section id="hero">
+  <div class="kicker">Systems <span style="color:var(--accent);">/</span> Statistics <span style="color:var(--accent);">/</span> Independent Research</div>
+  <h1 class="serif">Ryan Baik</h1>
+  <p class="tagline">I study how systems and data behave under the surface — from autonomous-driving simulation at Rutgers WINLAB to independent research on hearing health and the statistics behind music streaming platforms.</p>
+  <div class="hero-meta">
+    <div><strong>Based in</strong>Rutherford, NJ</div>
+    <div><strong>Focus</strong>Systems &amp; applied statistics</div>
+    <div><strong>Currently</strong>Rutgers WINLAB, CityOS</div>
+  </div>
+  <a href="#winlab" class="scroll-cue">Scroll to explore
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4v16M6 14l6 6 6-6"/></svg>
+  </a>
+</section>
+
+<section id="winlab">
+  <div class="section-inner">
+    <div class="eyebrow reveal">Featured</div>
+    <h2 class="section-title reveal">Rutgers WINLAB</h2>
+    <p class="section-sub reveal">Two selective research internships at an NSF-backed university lab, two years apart.</p>
+
+    <div class="featured-panel reveal">
+      <div class="featured-head">
+        <h3>WINLAB — Wireless Information Network Laboratory</h3>
+        <span>Rutgers University</span>
+      </div>
+
+      <div class="wl-role">
+        <div class="row"><span class="role">Research Intern — Core Infrastructure, CityOS</span><span class="date mono">Summer 2026 – Present</span></div>
+        <div class="sub">Autonomous-driving simulation &amp; data pipelines</div>
+        <ul>
+          <li>Selected to return to WINLAB for a second internship, this time on the Core Infrastructure team for CityOS, WINLAB's smart-city research initiative.</li>
+          <li>Run and test driving scenarios in CARLA, an open-source autonomous-vehicle simulator, to model real-world traffic and driving conditions.</li>
+          <li>Gather and structure the resulting simulation data so other teams across the CityOS stack can use it as a shared reference point for their own work.</li>
+        </ul>
+      </div>
+
+      <div class="wl-role">
+        <div class="row"><span class="role">Research Intern — ORBIT Data Center</span><span class="date mono">Summer 2024</span></div>
+        <div class="sub">Server infrastructure &amp; automation</div>
+        <ul>
+          <li>Selected as a high school freshman to help manage large-scale server infrastructure in an NSF-backed data center.</li>
+          <li>Built and deployed diskless computing systems, improving efficiency and automation across the server environment.</li>
+          <li>Worked on Linux cluster nodes using Warewulf and Fog inside a Proxmox environment to support university researchers.</li>
+          <li>Automated server systems and OS deployments with Bash and Python scripting, and filtered data across servers using awk, sed, and grep.</li>
+          <li>Worked under mentor Dr. Alexei Kotelnikov to document team progress.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="section-inner">
+    <div class="eyebrow reveal">Also</div>
+    <h2 class="section-title reveal">Other experience</h2>
+    <p class="section-sub reveal">Work outside the lab.</p>
+
+    <div class="simple-list">
+      <div class="simple-entry reveal">
+        <div class="row"><span class="role">Founding Member, Video Director/Editor</span><span class="date mono">Apr 2026 – Present</span></div>
+        <div class="org">Drawing The Line Nonprofit</div>
+        <ul>
+          <li>One of four founding leaders of a nonprofit that uses art to advocate against child abuse.</li>
+          <li>Shoot and edit video content for the organization's social channels, helping grow the audience past 200 followers.</li>
+          <li>Designed and built the nonprofit's website, presenting its mission, active projects, and social links.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="research">
+  <div class="section-inner">
+    <div class="eyebrow reveal">A closer look</div>
+    <h2 class="section-title reveal">Independent research</h2>
+    <p class="section-sub reveal">Two self-directed studies — one complete, one in progress.</p>
+
+    <div class="research-grid">
+
+      <div class="research-card reveal">
+        <span class="status-chip">Paper written</span>
+        <div>
+          <div class="rtag">Public health · survey research</div>
+          <h3>Tinnitus in Adolescent Musicians</h3>
+          <p>A cross-sectional survey comparing tinnitus-like symptoms between musicians and non-musicians ages 14–17 in Bergen County, NJ. Measured listening habits and sound exposure, then analyzed the results statistically for patterns by musician status and listening volume.</p>
+        </div>
+        <div class="research-stats">
+          <div><strong>n=20</strong><span>Respondents</span></div>
+          <div><strong>~70%</strong><span>Reported any ringing</span></div>
+          <div><strong>2026</strong><span>Data collected</span></div>
+        </div>
+      </div>
+
+      <div class="research-card reveal">
+        <span class="status-chip active">In progress</span>
+        <div>
+          <div class="rtag">Data science · statistics</div>
+          <h3>Power-Law Analysis of Spotify Artist Followers</h3>
+          <p>An ongoing study using a dataset of Spotify artist metadata to test whether artist follower counts follow a power-law distribution — the same heavy-tailed pattern seen in city populations or word frequencies. Fitting and evaluating the distribution on a log–log scale, then writing up the results as a formal paper.</p>
+        </div>
+        <div class="research-stats">
+          <div><strong>Spotify</strong><span>Data source</span></div>
+          <div><strong>Log–log</strong><span>Analysis method</span></div>
+          <div><strong>2026</strong><span>In progress</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="education">
+  <div class="section-inner">
+    <div class="eyebrow reveal">Foundations</div>
+    <h2 class="section-title reveal">Education</h2>
+    <p class="section-sub reveal">Coursework and programs alongside the research and technical work above.</p>
+
+    <div class="edu-grid">
+      <div class="edu-block reveal">
+        <div class="school">Rutherford High School</div>
+        <div class="school-sub">Rutherford, NJ · Expected graduation June 2027</div>
+      </div>
+
+      <div class="edu-block reveal">
+        <div class="col-label">Additional coursework &amp; programs</div>
+        <ul class="prog-list">
+          <li>
+            <div><span class="p-name">Penn Early Exploration Program (PEEP)</span><span class="p-org">1 of 100 selected from 800+ applicants</span></div>
+            <span class="p-status">Jul–Aug 2025</span>
+          </li>
+          <li>
+            <div><span class="p-name">Introduction to Statistics</span><span class="p-org">UC Berkeley Extension</span></div>
+            <span class="p-status">In progress</span>
+          </li>
+          <li>
+            <div><span class="p-name">Introduction to Python</span><span class="p-org">University of Michigan, Coursera</span></div>
+            <span class="p-status">In progress</span>
+          </li>
+          <li>
+            <div><span class="p-name">Linear Algebra: Elementary to Advanced</span><span class="p-org">Johns Hopkins University, Coursera</span></div>
+            <span class="p-status">In progress</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="section-inner">
+    <div class="eyebrow reveal">Toolkit</div>
+    <h2 class="section-title reveal">Skills</h2>
+    <p class="section-sub reveal">The technical foundation behind the work above.</p>
+
+    <div class="skills-grid">
+      <div class="skill-col reveal">
+        <div class="skill-label">Programming</div>
+        <ul>
+          <li><b>Languages:</b> Python, Java, JavaScript, HTML</li>
+          <li><b>Systems:</b> Linux (Ubuntu), Bash scripting</li>
+          <li><b>Logic:</b> Boolean logic systems</li>
+        </ul>
+      </div>
+      <div class="skill-col reveal">
+        <div class="skill-label">Data &amp; Infrastructure</div>
+        <ul>
+          <li><b>Data tools:</b> Pandas, R, statistical testing</li>
+          <li><b>Infra:</b> Warewulf, Fog, Proxmox, diskless deployment</li>
+          <li><b>Simulation:</b> CARLA autonomous-driving simulator</li>
+        </ul>
+      </div>
+      <div class="skill-col reveal">
+        <div class="skill-label">Media Production</div>
+        <ul>
+          <li><b>Editing:</b> DaVinci Resolve, Adobe Premiere Pro</li>
+          <li><b>Design:</b> Photoshop, Lightroom</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="section-inner contact-wrap">
+    <div class="eyebrow reveal">Get in touch</div>
+    <h2 class="reveal serif">Open to research and internship opportunities.</h2>
+    <p class="section-sub reveal" style="margin-bottom:0;">Reach out about systems, data, or research roles — I'm always glad to talk shop.</p>
+    <div class="contact-links reveal">
+      <a class="clink" href="mailto:musicalrya107@gmail.com">Email <span class="arrow">→</span></a>
+      <a class="clink" href="tel:2019178395">201-917-8395 <span class="arrow">→</span></a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>Ryan Baik © 2026</span>
+  <span>Rutherford, NJ</span>
+</footer>
+
+<script>
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
+    });
+  },{threshold:0.12});
+  revealEls.forEach(el=>io.observe(el));
+</script>
+
+</body>
+</html>
